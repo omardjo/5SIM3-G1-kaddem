@@ -1,0 +1,1 @@
+ 2javaXbhr:src/main/java/tn/esprit/spring/kaddem/entities/Equipe.java
