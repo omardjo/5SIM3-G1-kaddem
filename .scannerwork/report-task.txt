@@ -1,0 +1,6 @@
+projectKey=tn.esprit.spring.kaddem
+serverUrl=http://localhost:9000
+serverVersion=10.7.0.96327
+dashboardUrl=http://localhost:9000/dashboard?id=tn.esprit.spring.kaddem
+ceTaskId=5ca7feb6-19f7-4015-961a-1715a82cb643
+ceTaskUrl=http://localhost:9000/api/ce/task?id=5ca7feb6-19f7-4015-961a-1715a82cb643
