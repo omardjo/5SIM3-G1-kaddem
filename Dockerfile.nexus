@@ -1,0 +1,21 @@
+# Use a base image with Java (Nexus requires Java to run)
+FROM openjdk:17-jdk-slim
+
+# Set environment variables for Nexus
+ENV NEXUS_HOME=/opt/nexus
+ENV NEXUS_DATA=/nexus-data
+
+# Create directories
+RUN mkdir -p ${NEXUS_HOME} ${NEXUS_DATA}
+
+# Copy your local Nexus files into the image
+COPY nexus-3.73.0-12-unix/* ${NEXUS_HOME}/
+
+# Expose the Nexus port
+EXPOSE 8081
+
+# Set the working directory
+WORKDIR ${NEXUS_HOME}
+
+# Command to run Nexus
+CMD ["bash", "bin/nexus", "run"]
