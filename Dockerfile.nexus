@@ -1,0 +1,17 @@
+# Use the official Nexus Repository Manager image
+FROM sonatype/nexus3:3.73.0
+
+# Set environment variables for Nexus
+ENV NEXUS_DATA=/nexus-data
+
+# Create a directory for Nexus data
+RUN mkdir -p ${NEXUS_DATA}
+
+# Expose the Nexus port
+EXPOSE 8081
+
+# Set the working directory
+WORKDIR ${NEXUS_DATA}
+
+# Command to run Nexus
+CMD ["run"]

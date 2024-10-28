@@ -1,0 +1,27 @@
+# Use OpenJDK as the base image
+FROM openjdk:17-jdk-slim
+
+# Create a non-root user and group
+RUN addgroup --system sonarqube && adduser --system --ingroup sonarqube sonarqube
+
+# Install necessary packages
+RUN apt-get update && apt-get install -y \
+    curl \
+    unzip \
+    procps \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy the SonarQube files
+COPY ./sonarqube-10.7.0.96327 /opt/sonarqube
+
+# Change ownership of SonarQube files to the non-root user
+RUN chown -R sonarqube:sonarqube /opt/sonarqube
+
+# Switch to the non-root user
+USER sonarqube
+
+# Expose the SonarQube port
+EXPOSE 9007
+
+# Run SonarQube from the Linux-specific directory
+CMD ["/opt/sonarqube/bin/linux-x86-64/sonar.sh", "console"]

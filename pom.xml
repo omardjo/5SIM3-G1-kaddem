@@ -136,9 +136,9 @@
         </plugins>
     </build>
     <distributionManagement>
-    <snapshotRepository>
+    <repository>
         <id>nexus-snapshots</id>
-        <url>http://localhost:8081/repository/kaddem/</url> <!-- Adjust the URL to your Nexus snapshot repository -->
-    </snapshotRepository>
-</distributionManagement>
+        <url>http://172.19.0.3:8081/repository/kaddem/</url>
+    </repository>
+    </distributionManagement>
 </project>
