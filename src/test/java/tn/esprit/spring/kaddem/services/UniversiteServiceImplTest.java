@@ -20,15 +20,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class UniversiteServiceImplTest {
 
     @Mock
-    UniversiteRepository universiteRepository;
-
-    @Mock
-    DepartementRepository departementRepository;
+   private UniversiteRepository universiteRepository;
+   private DepartementRepository departementRepository;
+   
+  
 
     @InjectMocks
-    UniversiteServiceImpl universiteService;
+    private UniversiteServiceImpl universiteService;
 
-    Universite universite;
+    private Universite universite;
 
     @BeforeEach
     public void setUp() {
