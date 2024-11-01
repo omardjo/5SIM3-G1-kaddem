@@ -1,3 +1,4 @@
+package tn.esprit.spring.kaddem.services;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -8,13 +9,15 @@ import tn.esprit.spring.kaddem.entities.Universite;
 import tn.esprit.spring.kaddem.repositories.DepartementRepository;
 import tn.esprit.spring.kaddem.repositories.UniversiteRepository;
 import tn.esprit.spring.kaddem.services.UniversiteServiceImpl;
-
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.*;
-
+import org.junit.jupiter.api.extension.ExtendWith;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
-class UniversiteServiceImplTest {
+import org.springframework.boot.test.context.SpringBootTest;
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
+public class UniversiteServiceImplTest {
 
     @Mock
     UniversiteRepository universiteRepository;
@@ -28,13 +31,13 @@ class UniversiteServiceImplTest {
     Universite universite;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         universite = new Universite(1, "Université de Test");
     }
 
     @Test
-    void testAddUniversite() {
+    public void testAddUniversite() {
         when(universiteRepository.save(universite)).thenReturn(universite);
         Universite addedUniversite = universiteService.addUniversite(universite);
         assertNotNull(addedUniversite);
@@ -43,7 +46,7 @@ class UniversiteServiceImplTest {
     }
 
     @Test
-    void testUpdateUniversite() {
+    public void testUpdateUniversite() {
         when(universiteRepository.save(universite)).thenReturn(universite);
         
         Universite updatedUniversite = universiteService.updateUniversite(universite);
@@ -54,7 +57,7 @@ class UniversiteServiceImplTest {
     }
 
     @Test
-    void testRetrieveUniversite() {
+    public void testRetrieveUniversite() {
         when(universiteRepository.findById(1)).thenReturn(Optional.of(universite));
         Universite foundUniversite = universiteService.retrieveUniversite(1);
         assertNotNull(foundUniversite);
@@ -63,14 +66,14 @@ class UniversiteServiceImplTest {
     }
 
     @Test
-    void testDeleteUniversite() {
+    public void testDeleteUniversite() {
         when(universiteRepository.findById(1)).thenReturn(Optional.of(universite));
         universiteService.deleteUniversite(1);
         verify(universiteRepository, times(1)).delete(universite);
     }
 
     @Test
-    void testDeleteUniversiteNotFound() {
+    public void testDeleteUniversiteNotFound() {
         when(universiteRepository.findById(1)).thenReturn(Optional.empty());
 
         universiteService.deleteUniversite(1);
@@ -79,7 +82,7 @@ class UniversiteServiceImplTest {
     }
 
     @Test
-    void testAssignUniversiteToDepartement() {
+    public void testAssignUniversiteToDepartement() {
         Departement departement = new Departement(1, "Informatique");
         Set<Departement> departements = new HashSet<>();
         departements.add(departement);
@@ -95,7 +98,7 @@ class UniversiteServiceImplTest {
     }
 
     @Test
-    void testRetrieveDepartementsByUniversite() {
+   public void testRetrieveDepartementsByUniversite() {
         Departement departement = new Departement(1, "Informatique");
         Set<Departement> departements = new HashSet<>();
         departements.add(departement);
@@ -112,7 +115,7 @@ class UniversiteServiceImplTest {
     }
 
     @Test
-    void testRetrieveDepartementsByUniversiteNotFound() {
+    public void testRetrieveDepartementsByUniversiteNotFound() {
         when(universiteRepository.findById(1)).thenReturn(Optional.empty());
 
         Set<Departement> result = universiteService.retrieveDepartementsByUniversite(1);
@@ -122,7 +125,7 @@ class UniversiteServiceImplTest {
     }
 
     @Test
-    void testRetrieveAllUniversites() {
+    public void testRetrieveAllUniversites() {
         List<Universite> universites = Arrays.asList(universite);
         when(universiteRepository.findAll()).thenReturn(universites);
 
