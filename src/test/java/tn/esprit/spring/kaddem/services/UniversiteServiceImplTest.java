@@ -11,12 +11,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import org.springframework.boot.test.context.SpringBootTest;
+
 
 import java.util.*;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest
+
 public class UniversiteServiceImplTest {
 
     @Mock
