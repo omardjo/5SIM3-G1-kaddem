@@ -21,9 +21,9 @@ public class UniversiteServiceImplTest {
 
     @Mock
    private UniversiteRepository universiteRepository;
-   private DepartementRepository departementRepository;
-   
-  
+
+    @Mock
+    private DepartementRepository departementRepository;
 
     @InjectMocks
     private UniversiteServiceImpl universiteService;
