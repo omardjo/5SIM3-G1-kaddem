@@ -1,17 +1,24 @@
 package tn.esprit.spring.kaddem.services;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import tn.esprit.spring.kaddem.entities.*;
 import tn.esprit.spring.kaddem.repositories.*;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.*;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.*;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class EtudiantServiceImplTest {
 
@@ -39,24 +46,24 @@ public class EtudiantServiceImplTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        
+
         // Initialize Etudiant instances
         etudiant1 = new Etudiant();
         etudiant1.setIdEtudiant(1);
         etudiant1.setNomE("John Doe");
-        
+
         etudiant2 = new Etudiant();
         etudiant2.setIdEtudiant(2);
         etudiant2.setNomE("Jane Smith");
-        
+
         etudiant = new Etudiant(); // Initialize the new etudiant variable
         etudiant.setIdEtudiant(3);
         etudiant.setNomE("Alice Johnson");
-        
+
         // Initialize Contrat instance
         contrat = new Contrat();
         contrat.setIdContrat(1);
-        
+
         // Initialize Equipe instance with a HashSet to match Set<Etudiant>
         equipe = new Equipe();
         equipe.setIdEquipe(1);
@@ -144,7 +151,7 @@ public class EtudiantServiceImplTest {
         assertEquals("John Doe", etudiants.get(0).getNomE());
         verify(etudiantRepository, times(1)).findEtudiantsByDepartement_IdDepart(1);
     }
-    
+
     @Test
     public void testAddAndAssignEtudiantToEquipeAndContract_Success() {
         // Arrange: Mock contract and team exist
@@ -204,4 +211,5 @@ public class EtudiantServiceImplTest {
         verify(etudiantRepository, never()).save(any(Etudiant.class));
     }
 }
+
 
