@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   mysql:
     image: mysql:latest
@@ -9,10 +7,14 @@ services:
       MYSQL_DATABASE: kaddem
     ports:
       - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql  # Volume for MySQL data persistence
     networks:
       - networkmysql
+    restart: unless-stopped
 
   spring:
+    image: yassineezzar-5sim3-g1-kaddem 
     build:
       context: .
       dockerfile: Dockerfile
@@ -30,6 +32,28 @@ services:
     networks:
       - networkmysql
 
+  mysql_exporter:
+    image: prom/mysqld-exporter:latest
+    container_name: mysql_exporter
+    environment:
+      - DATA_SOURCE_NAME=root:root@(mysql:3306)/kaddem
+    ports:
+      - "9105:9104"
+    networks:
+      - networkmysql
+    depends_on:
+      - mysql
+    restart: unless-stopped
+    volumes:
+      - /home/yassine/.my.cnf:/cfg/.my.cnf  
+    command:
+      - --config.my-cnf=/cfg/.my.cnf  
+
 networks:
   networkmysql:
     driver: bridge
+
+volumes:
+  mysql_data:  
+  mysql_exporter_data:
+

@@ -14,10 +14,10 @@ import static org.mockito.Mockito.*;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.List;
-
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.*;
-
+@ActiveProfiles("test2")
 @ExtendWith(SpringExtension.class)
 
 public class UniversiteServiceImplTest {
