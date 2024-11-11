@@ -1,6 +1,6 @@
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
-
+import org.springframework.test.context.ActiveProfiles;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.List;
 
+@ActiveProfiles("test3")
 @ExtendWith(MockitoExtension.class)
 public class DepartementServiceImplTest {
 

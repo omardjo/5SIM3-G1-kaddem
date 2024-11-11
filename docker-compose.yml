@@ -2,30 +2,59 @@ version: '3.8'
 
 services:
   mysql:
-    image: mysql:8.0
-    container_name: mysql-container
+    image: mysql:latest
+    container_name: mysqlcontainer
     environment:
-      MYSQL_ROOT_PASSWORD: 0000         # Set your root password
-      MYSQL_DATABASE: kaddem_db          # Create a database named kaddem_db
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: kaddem
     ports:
-      - "3306:3306"                      # Expose MySQL on port 3306
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql  # Volume for MySQL data persistence
     networks:
-      - my-network
+      - networkmysql
 
-  springboot:
+  spring:
+    image: ryadhlaabidi-5sim3-g1-kaddem
     build:
-      context: .                         # Path to your Spring Boot application
-    ports:
-      - "8081:8080"                      # Expose Spring Boot on port 8080
-    depends_on:
-      - mysql                            # Wait for MySQL to be ready before starting Spring Boot
+      context: .
+      dockerfile: Dockerfile
+    container_name: springcontainer
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/kaddem_db?createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: 0000
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_DB_NAME: kaddem
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    ports:
+      - "8090:8080"
+    depends_on:
+      - mysql
     networks:
-      - my-network
+      - networkmysql
+
+  mysql_exporter:
+    image: prom/mysqld-exporter:latest
+    container_name: mysql_exporter
+    environment:
+      - DATA_SOURCE_NAME=root:root@(mysql:3306)/kaddem
+    ports:
+      - "9105:9104"  # Expose the metrics on port 9104
+    networks:
+      - networkmysql
+    depends_on:
+      - mysql
+    restart: unless-stopped
+    volumes:
+      - /home/msi/.my.cnf:/cfg/.my.cnf  # Mount the .my.cnf file
+    command:
+      - --config.my-cnf=/cfg/.my.cnf  # Pass the path to the .my.cnf file inside the container
 
 networks:
-  my-network:
+  networkmysql:
     driver: bridge
+
+volumes:
+  mysql_data:  # Volume for MySQL persistence
+  mysql_exporter_data:  # Volume for MySQL Exporter persistence
+
