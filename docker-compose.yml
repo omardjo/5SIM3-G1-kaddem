@@ -18,7 +18,7 @@ services:
       - kaddem-network
 
   springboot-app:
-    image: medazizbourguiba-5sim3-g1-kaddem
+    image: medbourguiba/medazizbourguiba-5sim3-g1-kaddem:latest
     build:
       context: .
       dockerfile: Dockerfile
