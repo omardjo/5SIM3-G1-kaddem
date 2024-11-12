@@ -1,7 +1,6 @@
 version: '3.8'
 
 services:
-
   mysql:
     image: mysql:8.0
     container_name: mysql_db
@@ -16,12 +15,6 @@ services:
       - mysql_data:/var/lib/mysql
     networks:
       - kaddem-network
-    healthcheck:
-      test: [ "CMD-SHELL", "mysqladmin ping -h localhost -u root -p0000 || exit 1" ]
-      interval: 10s
-      retries: 5
-      start_period: 30s
-
 
   springboot-app:
     image: medbourguiba/medazizbourguiba-5sim3-g1-kaddem:latest
@@ -38,3 +31,9 @@ services:
       - mysql
     networks:
       - kaddem-network
+
+volumes:
+  mysql_data:
+
+networks:
+  kaddem-network:
