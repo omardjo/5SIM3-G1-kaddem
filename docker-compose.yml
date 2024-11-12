@@ -19,7 +19,6 @@ services:
 
   springboot-app:
     image: medbourguiba/medazizbourguiba-5sim3-g1-kaddem:latest
-    restart: always
     build:
       context: .
       dockerfile: Dockerfile
